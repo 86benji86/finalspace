@@ -1,0 +1,19 @@
+{
+  "name": "finalspace",
+  "version": "1.0.0",
+  "description": "Consumir API de Final Space",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Final",
+    "Space",
+    "Gary",
+    "Goodspeed",
+    "Mooncake",
+    "JS"
+  ],
+  "author": "Benjamin Dominguez De Palma",
+  "license": "MIT"
+}

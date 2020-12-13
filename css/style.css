@@ -1,0 +1,15 @@
+.header {
+  background-image: url("../img/final-space.jpg");
+  background-size: cover;
+  background-position: top center;
+  height: 500px;
+  background-attachment: fixed;
+}
+
+.img-round-small {
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}

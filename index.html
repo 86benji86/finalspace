@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Space DB</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css" />
+
+</head>
+<body>
+
+    <header class="container-fluid header">
+        <div class="row">
+            <div class="col text-right align-self-end">
+                <h1 class="display-4 pt-3 text-white-50">Final Space</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right align-self-end">
+                <h1 class="display-4 pt-3 text-white-50">Database</h1>
+            </div>
+        </div>
+    </header>
+    
+     <!-- Navbar -->    
+    <div class="container">
+        <div class="align-items-center input-group mt-3 mb-3">
+            <input type="text" class="form-control" placeholder="Nombre del personaje" aria-label="Nombre del personaje" aria-describedby="button-addon2" id="buscar">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="find">Buscar</button>
+            </div>
+        </div>
+
+        <!-- Nodos dinamicos, se llenan en funcion del pedido a la api -->
+        <div class="row mt-5" id="apiResponse"></div>
+        <p id="sinpersonajes"></p>
+    </div>
+    
+    
+    <nav class="navbar-dark bg-dark">    
+        <div class="text-light text-right pr-2">By Benjamín Domínguez De Palma</div>
+    </nav>
+    <script src="index.js"></script>
+</body>
+</html>
