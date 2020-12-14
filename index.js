@@ -1,16 +1,20 @@
 const URLCHAR = "https://finalspaceapi.com/api/v0/character/?limit=9";
+const URLQUOTES = "https://finalspaceapi.com/api/v0/quote";
+const URLLOCATION = "https://finalspaceapi.com/api/v0/location";
 let characters = [];
+let quotes = [];
+let locations = [];
 
 // Trae personajes de la API, funcion asincronica, solo avanza a la siguiente linea cuando resuelve la promesa,
 // fetch hace peticion http, await porque es asincronica la funcion. GET es el metodo por defecto de fetch
 // Una vez que tiene la respuesta (en formato stringify), lo convierte a json con los personajes
-const getCharacters = async (url = URLCHAR) => {
+const getEntry = async (url) => {
     try {
     
     const response = await fetch(url); 
     
-    const characters = await response.json();
-    return characters;
+    const entry = await response.json();
+    return entry;
     } catch (error) { // Si falla cualquier linea, error a consola
         console.error(error);
     }
@@ -18,15 +22,17 @@ const getCharacters = async (url = URLCHAR) => {
 
 // Crea la columna (estructura minima), previa destructuracion del objeto character y la monta en el nodo html
 const createNode = ({id, img_url, name, status, alias}) => {
+    let quotes = getQuote(name);
     const node = `
         <div class="col-md-4 col-12" id="${id}">
             <div class="card mt-2 ml-1 mr-1">
-                <img src="${img_url}" class="img-round-small"/>
-                <div class="card-body ">
+            <img src="${img_url}" class="img-round-small"/>
+            <div class="card-body">
+            <button onClick="delChar(${id})" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">Estado: ${status}</p>
                     <p class="card-text">Alias: ${alias.length === 0 ? "No tiene" : alias[Math.round(Math.floor(Math.random()*alias.length))]}</p>
-                    <button onClick="delChar(${id})" class="btn btn-danger">Remover</button>
+                    <p class="card-text">Random quote: "${quotes.quote}"</p>
                 </div>
             </div>
         </div>
@@ -36,6 +42,11 @@ const createNode = ({id, img_url, name, status, alias}) => {
 
 // Itera los nodos y llama a createNode
 const iterateNodes = (node = characters) => node.map((nodo) => createNode(nodo));
+
+const getQuote = (name) => {
+    let quotesFrom = quotes.filter((quote) => quote.by === name);
+    return quotesFrom[[Math.round(Math.floor(Math.random()*quotesFrom.length))]];
+}
 
 // Cuando se remueven todos los personajes, muestra mensaje y deshabilita la busqueda
 const showMessage = () => {
@@ -65,9 +76,10 @@ const start = async () => {
             findChar();
         }
     });
-    characters = await getCharacters();
+    characters = await getEntry(URLCHAR);
+    quotes = await getEntry(URLQUOTES);
     // Recorre el objeto y crea de a un nodo por recorrida del mismo
-    iterateNodes(characters);    
+    iterateNodes(characters);
 };
 
 
