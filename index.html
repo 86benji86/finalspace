@@ -14,44 +14,43 @@
     <header class="container-fluid header">
         <div class="row">
             <div class="col text-right align-self-end">
-                <h1 class="display-4 pt-3 text-white-50">Final Space</h1>
+                <h1 class="display-2 pt-3 text-white-50">FINAL SPACE</h1>
             </div>
         </div>
         <div class="row">
             <div class="col text-right align-self-end">
-                <h1 class="display-4 pt-3 text-white-50">Database</h1>
+                <h2 class="display-4 pt-3 text-white">DATABASE</h2>
             </div>
         </div>
     </header>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end py-0 pr-1">
-        <!-- <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> -->
-            <div class="navbar-nav">
-                <a class="nav-link btn-outline-secondary" href="#">Personajes</a>
-                <a class="nav-link btn-outline-secondary" href="#">Episodios</a>
-                <a class="nav-link btn-outline-secondary" href="#">Locaciones</a>
+        <div class="navbar-nav">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" id="characters">Characters</button>
+                <button type="button" class="btn btn-secondary" id="locations">Locations</button>
+                <button type="button" class="btn btn-secondary" id="quotes">Quotes</button>
             </div>
         </div>
+        <!-- <div class="align-items-center input-group mt-3 mb-3">
+            <input type="text" class="form-control" placeholder="" aria-label="Nombre del personaje" aria-describedby="button-addon2" id="buscar">
+        </div>
+        <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button" id="find">Buscar</button>
+        </div> -->
     </nav>
          
     <div class="container">
-        <div class="align-items-center input-group mt-3 mb-3">
-            <input type="text" class="form-control" placeholder="Nombre del personaje" aria-label="Nombre del personaje" aria-describedby="button-addon2" id="buscar">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="find">Buscar</button>
-            </div>
-        </div>
-
         <!-- Nodos dinamicos, se llenan en funcion del pedido a la api -->
         <div class="row mt-5" id="apiResponse"></div>
-        <p id="sinpersonajes"></p>
+        <p id="sincontenido"></p>
     </div>
     
     <!-- Footer -->
-    <nav class="navbar-dark bg-dark">    
-        <div class="text-light text-right pr-2">By Benjamín Domínguez De Palma</div>
-    </nav>
+    <footer class="footer">
+            <div class="text-right pr-2">By Benjamín Dominguez De Palma</div>
+    </footer>
     <script src="index.js"></script>
 </body>
 </html>
