@@ -1,11 +1,9 @@
 const URLCHAR = "https://finalspaceapi.com/api/v0/character/";
 const URLQUOTES = "https://finalspaceapi.com/api/v0/quote";
 const URLLOCATION = "https://finalspaceapi.com/api/v0/location";
-const URLEPISODES = "https://finalspaceapi.com/api/v0/episode/";
 let characters = [];
 let quotes = [];
 let locations = [];
-let episodes = [];
 
 // Trae personajes de la API, funcion asincronica, solo avanza a la siguiente linea cuando resuelve la promesa,
 // fetch hace peticion http, await porque es asincronica la funcion. GET es el metodo por defecto de fetch
@@ -24,7 +22,6 @@ const getEntry = async (url) => {
 
 // Crea la columna (estructura minima), previa destructuracion del objeto character y la monta en el nodo html
 const createNodeCharacter = ({id, img_url, name, status, alias, abilities}) => {
-    // let quotes = getQuote(name);
     const node = `
         <div class="col-md-4 col-12" id="${id}">
             <div class="card mt-2 ml-1 mr-1">
@@ -33,9 +30,9 @@ const createNodeCharacter = ({id, img_url, name, status, alias, abilities}) => {
             <button onClick="delChar(${id})" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">Status: ${status}</p>
-                    <p class="card-text">Alias: ${alias.length === 0 ? "No tiene" : alias[Math.round(Math.floor(Math.random()*alias.length))]}</p>
-                    <p class="card-text">Abilities: ${abilities.join(" - ")}</p>
-                    <p class="card-text">Random quote: "${quotes.quote}"</p>
+                    <p class="card-text">Alias: ${alias.length === 0 ? "Unknown" : alias[Math.round(Math.floor(Math.random()*alias.length))]}</p>
+                    <p class="card-text">Abilities: ${abilities.length === 0 ? "Unknown" : abilities.join(" - ")}</p>
+                    <p class="card-text">Random quote: "${getQuote(name) === undefined ? "-" : getQuote(name).quote}"</p>
                 </div>
             </div>
         </div>
@@ -60,7 +57,7 @@ const createNodeLocation = ({id, img_url, name, type, inhabitants}) => {
     document.getElementById("apiResponse").insertAdjacentHTML("beforeend", node);
 };
 
-const createNodeQuotes = ({id, image, by, quote}) => {
+const createNodeQuotes = ({id, by, quote}) => {
     const node = `
         <div class="col-md-4 col-12" id="${id}">
             <blockquote class="blockquote text-center">
@@ -73,9 +70,11 @@ const createNodeQuotes = ({id, image, by, quote}) => {
 };
 
 // Itera los nodos y llama a createNode
-const iterateNodesCharacter = (node = characters) => {
+const iterateNodesCharacter = (node = character) => {
     clearNodes();
     node.map((nodo) => createNodeCharacter(nodo));
+    document.querySelector("#buscar").disabled = false;
+    document.getElementById("buscar").addEventListener("keyup", findChar);
 };
 
 const iterateNodesLocation = (node = location) => {
@@ -113,25 +112,21 @@ const clearNodes = () => {
 
 
 // Busca un personaje
-const findChar = () =>{
-    const {value: name} = document.querySelector("#buscar");
-    const foundCharacter = characters.find((character) => character.name.toLowerCase() === name.toLowerCase());
-    foundCharacter !== undefined ? console.log(foundCharacter) : console.log("no se encuentra");
-    
-};
+const findChar = () => {
+    const searchBar = document.getElementById("buscar")
+    searchBar.addEventListener("keyup", (e) => {
+        const searchString = e.target.value;
+        const filteredElements = characters.filter(character =>             character.name.toLowerCase().includes(searchString.toLowerCase()));
+        iterateNodesCharacter(filteredElements);
+    });
+}
 
 const start = async () => {
     characters = await getEntry(URLCHAR);
     quotes = await getEntry(URLQUOTES);
     locations = await getEntry(URLLOCATION);
-    // episodes = await getEntry(URLEPISODES);
+    document.querySelector("#buscar").disabled = true;
     // document.getElementById("find").addEventListener("click", findChar);
-    // document.getElementById("buscar").addEventListener("keyup", function(event) {
-    //     if (event.code === "Enter") {
-    //         findChar();
-    //     }
-    // });
-    
     document.getElementById("characters").addEventListener("click", event =>
     iterateNodesCharacter(characters));
     document.getElementById("quotes").addEventListener("click", event =>
